@@ -33,6 +33,7 @@ public interface EventExecutorGroup extends ScheduledExecutorService, Iterable<E
      * Returns {@code true} if and only if all {@link EventExecutor}s managed by this {@link EventExecutorGroup}
      * are being {@linkplain #shutdownGracefully() shut down gracefully} or was {@linkplain #isShutdown() shut down}.
      */
+    //是否正在关闭
     boolean isShuttingDown();
 
     /**
@@ -40,6 +41,7 @@ public interface EventExecutorGroup extends ScheduledExecutorService, Iterable<E
      *
      * @return the {@link #terminationFuture()}
      */
+    //优雅关闭
     Future<?> shutdownGracefully();
 
     /**
@@ -56,12 +58,14 @@ public interface EventExecutorGroup extends ScheduledExecutorService, Iterable<E
      *
      * @return the {@link #terminationFuture()}
      */
+    //规定时间内优雅关闭，否则强制关闭
     Future<?> shutdownGracefully(long quietPeriod, long timeout, TimeUnit unit);
 
     /**
      * Returns the {@link Future} which is notified when all {@link EventExecutor}s managed by this
      * {@link EventExecutorGroup} have been terminated.
      */
+    //返回已经终止操作的Future
     Future<?> terminationFuture();
 
     /**
@@ -81,12 +85,15 @@ public interface EventExecutorGroup extends ScheduledExecutorService, Iterable<E
     /**
      * Returns one of the {@link EventExecutor}s managed by this {@link EventExecutorGroup}.
      */
+    //返回下一个EventExecutor
     EventExecutor next();
 
     @Override
+    //EventExecutor迭代器
     Iterator<EventExecutor> iterator();
 
     @Override
+    //提交任务
     Future<?> submit(Runnable task);
 
     @Override
@@ -96,6 +103,7 @@ public interface EventExecutorGroup extends ScheduledExecutorService, Iterable<E
     <T> Future<T> submit(Callable<T> task);
 
     @Override
+    //提交一个定时任务
     ScheduledFuture<?> schedule(Runnable command, long delay, TimeUnit unit);
 
     @Override

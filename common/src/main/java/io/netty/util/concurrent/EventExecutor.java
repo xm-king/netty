@@ -28,22 +28,26 @@ public interface EventExecutor extends EventExecutorGroup {
      * Returns a reference to itself.
      */
     @Override
+    //返回自己
     EventExecutor next();
 
     /**
      * Return the {@link EventExecutorGroup} which is the parent of this {@link EventExecutor},
      */
+    //返回group
     EventExecutorGroup parent();
 
     /**
      * Calls {@link #inEventLoop(Thread)} with {@link Thread#currentThread()} as argument
      */
+    //当前线程是否在EventExecuto线程中
     boolean inEventLoop();
 
     /**
      * Return {@code true} if the given {@link Thread} is executed in the event loop,
      * {@code false} otherwise.
      */
+    //线程是否在EventExecuto线程中
     boolean inEventLoop(Thread thread);
 
     /**
