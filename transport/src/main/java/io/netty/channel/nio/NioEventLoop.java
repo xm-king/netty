@@ -451,6 +451,7 @@ public final class NioEventLoop extends SingleThreadEventLoop {
                         processSelectedKeys();
                     } finally {
                         // Ensure we always run tasks.
+                        // 运行其它任务
                         runAllTasks();
                     }
                 } else {
