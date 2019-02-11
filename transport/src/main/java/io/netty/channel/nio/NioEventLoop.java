@@ -468,7 +468,9 @@ public final class NioEventLoop extends SingleThreadEventLoop {
             }
             // Always handle shutdown even if the loop processing threw an exception.
             try {
+                //如果已经关闭中
                 if (isShuttingDown()) {
+                    //关闭所有Channel
                     closeAll();
                     if (confirmShutdown()) {
                         return;
@@ -675,6 +677,7 @@ public final class NioEventLoop extends SingleThreadEventLoop {
 
     private void closeAll() {
         selectAgain();
+        //注册在Selector上的所有Channel都关闭
         Set<SelectionKey> keys = selector.keys();
         Collection<AbstractNioChannel> channels = new ArrayList<AbstractNioChannel>(keys.size());
         for (SelectionKey k: keys) {

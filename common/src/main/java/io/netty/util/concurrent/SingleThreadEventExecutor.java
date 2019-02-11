@@ -555,6 +555,7 @@ public abstract class SingleThreadEventExecutor extends AbstractScheduledEventEx
         boolean wakeup;
         int oldState;
         for (;;) {
+            //原子自旋锁做并发保护
             if (isShuttingDown()) {
                 return terminationFuture();
             }
@@ -574,6 +575,7 @@ public abstract class SingleThreadEventExecutor extends AbstractScheduledEventEx
                         wakeup = false;
                 }
             }
+            //CAS操作
             if (STATE_UPDATER.compareAndSet(this, oldState, newState)) {
                 break;
             }
