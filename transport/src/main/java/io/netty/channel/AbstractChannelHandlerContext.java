@@ -200,10 +200,12 @@ abstract class AbstractChannelHandlerContext extends DefaultAttributeMap
     }
 
     static void invokeChannelActive(final AbstractChannelHandlerContext next) {
+        //获得下一个的Executor
         EventExecutor executor = next.executor();
         if (executor.inEventLoop()) {
             next.invokeChannelActive();
         } else {
+            //提交任务
             executor.execute(new Runnable() {
                 @Override
                 public void run() {
@@ -485,12 +487,14 @@ abstract class AbstractChannelHandlerContext extends DefaultAttributeMap
             // cancelled
             return promise;
         }
-
+        //获取下一个OutboundContext节点
         final AbstractChannelHandlerContext next = findContextOutbound();
+        //OutboundContext的执行器
         EventExecutor executor = next.executor();
         if (executor.inEventLoop()) {
             next.invokeBind(localAddress, promise);
         } else {
+            //提交任务
             safeExecute(executor, new Runnable() {
                 @Override
                 public void run() {
@@ -498,6 +502,7 @@ abstract class AbstractChannelHandlerContext extends DefaultAttributeMap
                 }
             }, promise, null);
         }
+        //返回Promise
         return promise;
     }
 

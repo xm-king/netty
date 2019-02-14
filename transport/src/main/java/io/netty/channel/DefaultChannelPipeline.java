@@ -67,10 +67,12 @@ public class DefaultChannelPipeline implements ChannelPipeline {
     final AbstractChannelHandlerContext tail;
     //关联的Channel
     private final Channel channel;
+    //成功的Promise对象
     private final ChannelFuture succeededFuture;
     private final VoidChannelPromise voidPromise;
     private final boolean touch = ResourceLeakDetector.isEnabled();
 
+    //子执行器
     private Map<EventExecutorGroup, EventExecutor> childExecutors;
     private volatile MessageSizeEstimator.Handle estimatorHandle;
     private boolean firstRegistration = true;
@@ -208,10 +210,13 @@ public class DefaultChannelPipeline implements ChannelPipeline {
     public final ChannelPipeline addLast(EventExecutorGroup group, String name, ChannelHandler handler) {
         final AbstractChannelHandlerContext newCtx;
         synchronized (this) {
+            //检查重复
             checkMultiplicity(handler);
 
+            //生成ChannelHandlerContext
             newCtx = newContext(group, filterName(name, handler), handler);
 
+            //添加到Last节点
             addLast0(newCtx);
 
             // If the registered is false it means that the channel was not registered on an eventloop yet.
@@ -224,6 +229,7 @@ public class DefaultChannelPipeline implements ChannelPipeline {
             }
 
             EventExecutor executor = newCtx.executor();
+            //触发handlerAdded事件
             if (!executor.inEventLoop()) {
                 newCtx.setAddPending();
                 executor.execute(new Runnable() {
