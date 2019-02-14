@@ -182,12 +182,14 @@ public interface ChannelHandler {
     /**
      * Gets called after the {@link ChannelHandler} was added to the actual context and it's ready to handle events.
      */
+    //handler添加到Context时触发
     void handlerAdded(ChannelHandlerContext ctx) throws Exception;
 
     /**
      * Gets called after the {@link ChannelHandler} was removed from the actual context and it doesn't handle events
      * anymore.
      */
+    //handler从Context删除时触发
     void handlerRemoved(ChannelHandlerContext ctx) throws Exception;
 
     /**
@@ -195,6 +197,7 @@ public interface ChannelHandler {
      *
      * @deprecated is part of {@link ChannelInboundHandler}
      */
+    //handler发生异常时触发
     @Deprecated
     void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception;
 
@@ -210,6 +213,7 @@ public interface ChannelHandler {
      * This annotation is provided for documentation purpose, just like
      * <a href="http://www.javaconcurrencyinpractice.com/annotations/doc/">the JCIP annotations</a>.
      */
+    //标明Handler是否可以共享，添加到不同的channelPipeline
     @Inherited
     @Documented
     @Target(ElementType.TYPE)

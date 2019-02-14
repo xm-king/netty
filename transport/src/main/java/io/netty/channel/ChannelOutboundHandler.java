@@ -20,6 +20,7 @@ import java.net.SocketAddress;
 /**
  * {@link ChannelHandler} which will get notified for IO-outbound-operations.
  */
+//处理outbound事件
 public interface ChannelOutboundHandler extends ChannelHandler {
     /**
      * Called once a bind operation is made.
@@ -29,6 +30,7 @@ public interface ChannelOutboundHandler extends ChannelHandler {
      * @param promise       the {@link ChannelPromise} to notify once the operation completes
      * @throws Exception    thrown if an error occurs
      */
+    //绑定事件触发
     void bind(ChannelHandlerContext ctx, SocketAddress localAddress, ChannelPromise promise) throws Exception;
 
     /**
@@ -40,6 +42,7 @@ public interface ChannelOutboundHandler extends ChannelHandler {
      * @param promise           the {@link ChannelPromise} to notify once the operation completes
      * @throws Exception        thrown if an error occurs
      */
+    //连接事件触发
     void connect(
             ChannelHandlerContext ctx, SocketAddress remoteAddress,
             SocketAddress localAddress, ChannelPromise promise) throws Exception;
@@ -51,6 +54,7 @@ public interface ChannelOutboundHandler extends ChannelHandler {
      * @param promise           the {@link ChannelPromise} to notify once the operation completes
      * @throws Exception        thrown if an error occurs
      */
+    //未连接事件触发
     void disconnect(ChannelHandlerContext ctx, ChannelPromise promise) throws Exception;
 
     /**
@@ -60,6 +64,7 @@ public interface ChannelOutboundHandler extends ChannelHandler {
      * @param promise           the {@link ChannelPromise} to notify once the operation completes
      * @throws Exception        thrown if an error occurs
      */
+    //关闭通道事件触发
     void close(ChannelHandlerContext ctx, ChannelPromise promise) throws Exception;
 
     /**
@@ -69,11 +74,13 @@ public interface ChannelOutboundHandler extends ChannelHandler {
      * @param promise           the {@link ChannelPromise} to notify once the operation completes
      * @throws Exception        thrown if an error occurs
      */
+    //取消事件触发
     void deregister(ChannelHandlerContext ctx, ChannelPromise promise) throws Exception;
 
     /**
      * Intercepts {@link ChannelHandlerContext#read()}.
      */
+    //读取事件
     void read(ChannelHandlerContext ctx) throws Exception;
 
     /**
@@ -86,6 +93,7 @@ public interface ChannelOutboundHandler extends ChannelHandler {
      * @param promise           the {@link ChannelPromise} to notify once the operation completes
      * @throws Exception        thrown if an error occurs
      */
+    //写数据事件
     void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception;
 
     /**
@@ -95,5 +103,6 @@ public interface ChannelOutboundHandler extends ChannelHandler {
      * @param ctx               the {@link ChannelHandlerContext} for which the flush operation is made
      * @throws Exception        thrown if an error occurs
      */
+    //flush触发
     void flush(ChannelHandlerContext ctx) throws Exception;
 }

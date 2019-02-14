@@ -23,6 +23,7 @@ import java.util.Map;
 /**
  * Skeleton implementation of a {@link ChannelHandler}.
  */
+//ChannelHander的基础实现
 public abstract class ChannelHandlerAdapter implements ChannelHandler {
 
     // Not using volatile because it's used only for a sanity check.
@@ -31,6 +32,7 @@ public abstract class ChannelHandlerAdapter implements ChannelHandler {
     /**
      * Throws {@link IllegalStateException} if {@link ChannelHandlerAdapter#isSharable()} returns {@code true}
      */
+    //判断Handler是否可共享
     protected void ensureNotSharable() {
         if (isSharable()) {
             throw new IllegalStateException("ChannelHandler " + getClass().getName() + " is not allowed to be shared");

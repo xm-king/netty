@@ -29,6 +29,7 @@ package io.netty.channel;
  * releases the received messages automatically, please see {@link SimpleChannelInboundHandler}.
  * </p>
  */
+//InboundHandler包装辅助类
 public class ChannelInboundHandlerAdapter extends ChannelHandlerAdapter implements ChannelInboundHandler {
 
     /**
