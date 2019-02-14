@@ -837,6 +837,7 @@ abstract class AbstractChannelHandlerContext extends DefaultAttributeMap
         }
     }
 
+
     @Override
     public ChannelFuture writeAndFlush(Object msg) {
         return writeAndFlush(msg, newPromise());
