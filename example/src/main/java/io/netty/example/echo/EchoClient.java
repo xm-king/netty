@@ -79,7 +79,6 @@ public final class EchoClient {
                      //tail -> EchoClientHandler -> StringEncoder -> Head -> Unsafe.write
                  }
              });
-
             // Start the client.
             ChannelFuture f = b.connect(HOST, PORT).sync();
 
