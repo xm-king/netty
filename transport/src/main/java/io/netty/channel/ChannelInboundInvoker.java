@@ -24,6 +24,7 @@ public interface ChannelInboundInvoker {
      * called of the next  {@link ChannelInboundHandler} contained in the  {@link ChannelPipeline} of the
      * {@link Channel}.
      */
+    //触发ChannelRegistered事件
     ChannelInboundInvoker fireChannelRegistered();
 
     /**
@@ -33,6 +34,7 @@ public interface ChannelInboundInvoker {
      * called of the next  {@link ChannelInboundHandler} contained in the  {@link ChannelPipeline} of the
      * {@link Channel}.
      */
+    //触发ChannelUnregistered事件
     ChannelInboundInvoker fireChannelUnregistered();
 
     /**
@@ -42,6 +44,7 @@ public interface ChannelInboundInvoker {
      * called of the next  {@link ChannelInboundHandler} contained in the  {@link ChannelPipeline} of the
      * {@link Channel}.
      */
+    //触发ChannelActive事件
     ChannelInboundInvoker fireChannelActive();
 
     /**
@@ -51,6 +54,7 @@ public interface ChannelInboundInvoker {
      * called of the next  {@link ChannelInboundHandler} contained in the  {@link ChannelPipeline} of the
      * {@link Channel}.
      */
+    //触发ChannelInactive事件
     ChannelInboundInvoker fireChannelInactive();
 
     /**
@@ -78,12 +82,14 @@ public interface ChannelInboundInvoker {
      * method  called of the next {@link ChannelInboundHandler} contained in the  {@link ChannelPipeline} of the
      * {@link Channel}.
      */
+    //触发ChannelRead事件
     ChannelInboundInvoker fireChannelRead(Object msg);
 
     /**
      * Triggers an {@link ChannelInboundHandler#channelReadComplete(ChannelHandlerContext)}
      * event to the next {@link ChannelInboundHandler} in the {@link ChannelPipeline}.
      */
+    //触发ChannelReadComplete事件
     ChannelInboundInvoker fireChannelReadComplete();
 
     /**

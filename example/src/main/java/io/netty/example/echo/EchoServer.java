@@ -24,6 +24,8 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.codec.string.StringEncoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.ssl.SslContext;
@@ -65,7 +67,16 @@ public final class EchoServer {
                          p.addLast(sslCtx.newHandler(ch.alloc()));
                      }
                      //p.addLast(new LoggingHandler(LogLevel.INFO));
+                     p.addLast(new StringDecoder());
+                     p.addLast(new StringEncoder());
                      p.addLast(new EchoServerHandler());
+
+                     //firechannelRead
+                     //pipeline channelHandler顺序
+                     //head -> StringDecoder -> EchoServerHandler -> Tail
+
+                     //read 执行顺序
+                     //unsafe.read -> ctx.firechannelRead -> head -> StringDecoder -> EchoServerHandler -> Tail DoNothing
                  }
              });
 

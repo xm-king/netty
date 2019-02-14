@@ -34,9 +34,7 @@ public class EchoClientHandler extends ChannelInboundHandlerAdapter {
      */
     public EchoClientHandler() {
         firstMessage = Unpooled.buffer(EchoClient.SIZE);
-        for (int i = 0; i < firstMessage.capacity(); i ++) {
-            firstMessage.writeByte((byte) i);
-        }
+        firstMessage.writeBytes("Hello World".getBytes());
     }
 
     @Override
@@ -46,12 +44,10 @@ public class EchoClientHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
-        ctx.write(msg);
-    }
-
-    @Override
-    public void channelReadComplete(ChannelHandlerContext ctx) {
-       ctx.flush();
+        System.out.println(msg);
+        //ctx.write(msg);
+        //关闭连接通道
+        ctx.channel().close();
     }
 
     @Override

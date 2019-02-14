@@ -21,6 +21,7 @@ import io.netty.util.concurrent.FutureListener;
 import java.net.ConnectException;
 import java.net.SocketAddress;
 
+//outbound异步方式调用
 public interface ChannelOutboundInvoker {
 
     /**
@@ -32,6 +33,7 @@ public interface ChannelOutboundInvoker {
      * called of the next {@link ChannelOutboundHandler} contained in the {@link ChannelPipeline} of the
      * {@link Channel}.
      */
+    //bind
     ChannelFuture bind(SocketAddress localAddress);
 
     /**
