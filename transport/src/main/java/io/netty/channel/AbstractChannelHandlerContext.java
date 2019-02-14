@@ -35,11 +35,14 @@ import io.netty.util.internal.logging.InternalLoggerFactory;
 import java.net.SocketAddress;
 import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
 
+//ChannelHandlerContext基础抽象类
 abstract class AbstractChannelHandlerContext extends DefaultAttributeMap
         implements ChannelHandlerContext, ResourceLeakHint {
 
     private static final InternalLogger logger = InternalLoggerFactory.getInstance(AbstractChannelHandlerContext.class);
+    //后继ChannelHandlerContext
     volatile AbstractChannelHandlerContext next;
+    //前置ChannelHandlerContext
     volatile AbstractChannelHandlerContext prev;
 
     private static final AtomicIntegerFieldUpdater<AbstractChannelHandlerContext> HANDLER_STATE_UPDATER =
@@ -62,15 +65,18 @@ abstract class AbstractChannelHandlerContext extends DefaultAttributeMap
      * nor {@link ChannelHandler#handlerRemoved(ChannelHandlerContext)} was called.
      */
     private static final int INIT = 0;
-
+    //inboundHandler标志
     private final boolean inbound;
+    //outboundHandler标志
     private final boolean outbound;
+    //关联的pipeline
     private final DefaultChannelPipeline pipeline;
     private final String name;
     private final boolean ordered;
 
     // Will be set to null if no child executor should be used, otherwise it will be set to the
     // child executor.
+    //关联的EventExecutor
     final EventExecutor executor;
     private ChannelFuture succeededFuture;
 

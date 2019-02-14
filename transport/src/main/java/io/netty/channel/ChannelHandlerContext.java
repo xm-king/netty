@@ -127,11 +127,13 @@ public interface ChannelHandlerContext extends AttributeMap, ChannelInboundInvok
     /**
      * Return the {@link Channel} which is bound to the {@link ChannelHandlerContext}.
      */
+    //返回绑定的Channel
     Channel channel();
 
     /**
      * Returns the {@link EventExecutor} which is used to execute an arbitrary task.
      */
+    //返回对应的Executor
     EventExecutor executor();
 
     /**
@@ -139,11 +141,13 @@ public interface ChannelHandlerContext extends AttributeMap, ChannelInboundInvok
      * was added to the {@link ChannelPipeline}. This name can also be used to access the registered
      * {@link ChannelHandler} from the {@link ChannelPipeline}.
      */
+    //返回ChannelHandler的名称
     String name();
 
     /**
      * The {@link ChannelHandler} that is bound this {@link ChannelHandlerContext}.
      */
+    //返回对应的ChannelHandler
     ChannelHandler handler();
 
     /**
@@ -151,6 +155,7 @@ public interface ChannelHandlerContext extends AttributeMap, ChannelInboundInvok
      * from the {@link ChannelPipeline}. Note that this method is only meant to be called from with in the
      * {@link EventLoop}.
      */
+    //是否被移除
     boolean isRemoved();
 
     @Override

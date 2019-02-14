@@ -61,9 +61,11 @@ public class DefaultChannelPipeline implements ChannelPipeline {
     private static final AtomicReferenceFieldUpdater<DefaultChannelPipeline, MessageSizeEstimator.Handle> ESTIMATOR =
             AtomicReferenceFieldUpdater.newUpdater(
                     DefaultChannelPipeline.class, MessageSizeEstimator.Handle.class, "estimatorHandle");
+    //Head节点
     final AbstractChannelHandlerContext head;
+    //Tail节点
     final AbstractChannelHandlerContext tail;
-
+    //关联的Channel
     private final Channel channel;
     private final ChannelFuture succeededFuture;
     private final VoidChannelPromise voidPromise;
@@ -87,6 +89,7 @@ public class DefaultChannelPipeline implements ChannelPipeline {
      * Set to {@code true} once the {@link AbstractChannel} is registered.Once set to {@code true} the value will never
      * change.
      */
+    //是否注册完成
     private boolean registered;
 
     protected DefaultChannelPipeline(Channel channel) {

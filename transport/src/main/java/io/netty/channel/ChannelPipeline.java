@@ -54,6 +54,7 @@ import java.util.NoSuchElementException;
  *                                                      |
  *  +---------------------------------------------------+---------------+
  *  |                           ChannelPipeline         |               |
+ *  |                              TailContext          |               |
  *  |                                                  \|/              |
  *  |    +---------------------+            +-----------+----------+    |
  *  |    | Inbound Handler  N  |            | Outbound Handler  1  |    |
@@ -79,7 +80,7 @@ import java.util.NoSuchElementException;
  *  |    +----------+----------+            +-----------+----------+    |
  *  |              /|\                                  |               |
  *  +---------------+-----------------------------------+---------------+
- *                  |                                  \|/
+ *                  |           HeadContext            \|/
  *  +---------------+-----------------------------------+---------------+
  *  |               |                                   |               |
  *  |       [ Socket.read() ]                    [ Socket.write() ]     |
@@ -227,6 +228,7 @@ public interface ChannelPipeline
      * @throws NullPointerException
      *         if the specified handler is {@code null}
      */
+    //Head之后添加Handler
     ChannelPipeline addFirst(String name, ChannelHandler handler);
 
     /**
