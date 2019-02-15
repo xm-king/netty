@@ -79,11 +79,13 @@ public interface Channel extends AttributeMap, ChannelOutboundInvoker, Comparabl
     /**
      * Returns the globally unique identifier of this {@link Channel}.
      */
+    //ChannelId
     ChannelId id();
 
     /**
      * Return the {@link EventLoop} this {@link Channel} was registered to.
      */
+    //绑定的EventLoop
     EventLoop eventLoop();
 
     /**
@@ -92,31 +94,37 @@ public interface Channel extends AttributeMap, ChannelOutboundInvoker, Comparabl
      * @return the parent channel.
      *         {@code null} if this channel does not have a parent channel.
      */
+    //父Channel
     Channel parent();
 
     /**
      * Returns the configuration of this channel.
      */
+    //返回ChannelConfig
     ChannelConfig config();
 
     /**
      * Returns {@code true} if the {@link Channel} is open and may get active later
      */
+    //Channel是否开启
     boolean isOpen();
 
     /**
      * Returns {@code true} if the {@link Channel} is registered with an {@link EventLoop}.
      */
+    //Channel是否已经注册
     boolean isRegistered();
 
     /**
      * Return {@code true} if the {@link Channel} is active and so connected.
      */
+    //Channel是否激活
     boolean isActive();
 
     /**
      * Return the {@link ChannelMetadata} of the {@link Channel} which describe the nature of the {@link Channel}.
      */
+     //Channel元数据
     ChannelMetadata metadata();
 
     /**
@@ -128,6 +136,7 @@ public interface Channel extends AttributeMap, ChannelOutboundInvoker, Comparabl
      * @return the local address of this channel.
      *         {@code null} if this channel is not bound.
      */
+    //
     SocketAddress localAddress();
 
     /**

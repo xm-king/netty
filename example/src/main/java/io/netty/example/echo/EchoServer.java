@@ -31,6 +31,9 @@ import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.SelfSignedCertificate;
+import io.netty.util.concurrent.*;
+
+import java.util.concurrent.Executor;
 
 /**
  * Echoes back any received data from a client.
@@ -53,6 +56,7 @@ public final class EchoServer {
         // Configure the server.
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);
         EventLoopGroup workerGroup = new NioEventLoopGroup();
+        EventExecutorGroup customGroup = new DefaultEventExecutorGroup(16,new DefaultThreadFactory("custom"));
         try {
             ServerBootstrap b = new ServerBootstrap();
             b.group(bossGroup, workerGroup)
@@ -69,7 +73,7 @@ public final class EchoServer {
                      //p.addLast(new LoggingHandler(LogLevel.INFO));
                      p.addLast(new StringDecoder());
                      p.addLast(new StringEncoder());
-                     p.addLast(new EchoServerHandler());
+                     p.addLast(customGroup,new EchoServerHandler());
 
                      //firechannelRead
                      //pipeline channelHandler顺序
