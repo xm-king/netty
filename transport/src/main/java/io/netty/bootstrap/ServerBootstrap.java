@@ -266,6 +266,7 @@ public class ServerBootstrap extends AbstractBootstrap<ServerBootstrap, ServerCh
             } catch (Throwable t) {
                 forceClose(child, t);
             }
+            //并没有向上传递
         }
 
         private static void forceClose(Channel child, Throwable t) {
