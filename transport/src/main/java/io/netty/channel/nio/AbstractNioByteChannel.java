@@ -267,7 +267,7 @@ public abstract class AbstractNioByteChannel extends AbstractNioChannel {
             if (buf.isDirect()) {
                 return msg;
             }
-
+            //将ByteBuf转变成DirectBuffer,Zero Copy
             return newDirectBuffer(buf);
         }
 
