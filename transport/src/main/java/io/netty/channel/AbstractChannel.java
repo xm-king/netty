@@ -40,6 +40,7 @@ import java.util.concurrent.RejectedExecutionException;
 /**
  * A skeletal {@link Channel} implementation.
  */
+//Channel抽象基类
 public abstract class AbstractChannel extends DefaultAttributeMap implements Channel {
 
     private static final InternalLogger logger = InternalLoggerFactory.getInstance(AbstractChannel.class);
@@ -287,6 +288,7 @@ public abstract class AbstractChannel extends DefaultAttributeMap implements Cha
 
     @Override
     public ChannelFuture write(Object msg) {
+        //write事件在pipeline传播
         return pipeline.write(msg);
     }
 
@@ -887,7 +889,7 @@ public abstract class AbstractChannel extends DefaultAttributeMap implements Cha
                 ReferenceCountUtil.release(msg);
                 return;
             }
-
+            //写入到内存缓冲区中
             outboundBuffer.addMessage(msg, size, promise);
         }
 

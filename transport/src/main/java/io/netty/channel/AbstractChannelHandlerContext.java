@@ -717,6 +717,7 @@ abstract class AbstractChannelHandlerContext extends DefaultAttributeMap
 
     @Override
     public ChannelFuture write(final Object msg, final ChannelPromise promise) {
+        //
         if (msg == null) {
             throw new NullPointerException("msg");
         }
@@ -817,16 +818,19 @@ abstract class AbstractChannelHandlerContext extends DefaultAttributeMap
     }
 
     private void write(Object msg, boolean flush, ChannelPromise promise) {
+        //获得下一个节点
         AbstractChannelHandlerContext next = findContextOutbound();
         final Object m = pipeline.touch(msg, next);
         EventExecutor executor = next.executor();
         if (executor.inEventLoop()) {
+            //当前线程执行
             if (flush) {
                 next.invokeWriteAndFlush(m, promise);
             } else {
                 next.invokeWrite(m, promise);
             }
         } else {
+            //提交线程任务
             AbstractWriteTask task;
             if (flush) {
                 task = WriteAndFlushTask.newInstance(next, m, promise);

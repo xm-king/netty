@@ -57,6 +57,7 @@ public abstract class AbstractNioMessageChannel extends AbstractNioChannel {
 
     private final class NioMessageUnsafe extends AbstractNioUnsafe {
 
+        //读取数据缓冲区
         private final List<Object> readBuf = new ArrayList<Object>();
 
         @Override
@@ -82,17 +83,20 @@ public abstract class AbstractNioMessageChannel extends AbstractNioChannel {
                         }
 
                         allocHandle.incMessagesRead(localRead);
+                        //判断是否需要继续读取
                     } while (allocHandle.continueReading());
                 } catch (Throwable t) {
                     exception = t;
                 }
 
+                //触发channelRead事件
                 int size = readBuf.size();
                 for (int i = 0; i < size; i ++) {
                     readPending = false;
                     pipeline.fireChannelRead(readBuf.get(i));
                 }
                 readBuf.clear();
+                //读取完成，触发ReadComplete事件
                 allocHandle.readComplete();
                 pipeline.fireChannelReadComplete();
 

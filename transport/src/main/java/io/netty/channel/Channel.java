@@ -136,7 +136,7 @@ public interface Channel extends AttributeMap, ChannelOutboundInvoker, Comparabl
      * @return the local address of this channel.
      *         {@code null} if this channel is not bound.
      */
-    //
+    //Channel绑定的本地IP地址
     SocketAddress localAddress();
 
     /**
@@ -153,6 +153,7 @@ public interface Channel extends AttributeMap, ChannelOutboundInvoker, Comparabl
      *         the origination of the received message as this method will
      *         return {@code null}.
      */
+    //远端地址
     SocketAddress remoteAddress();
 
     /**
@@ -184,16 +185,19 @@ public interface Channel extends AttributeMap, ChannelOutboundInvoker, Comparabl
     /**
      * Returns an <em>internal-use-only</em> object that provides unsafe operations.
      */
+    //Unsafe对象
     Unsafe unsafe();
 
     /**
      * Return the assigned {@link ChannelPipeline}.
      */
+    //关联的pipeline
     ChannelPipeline pipeline();
 
     /**
      * Return the assigned {@link ByteBufAllocator} which will be used to allocate {@link ByteBuf}s.
      */
+    //ByteBuf分配器
     ByteBufAllocator alloc();
 
     @Override
