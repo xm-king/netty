@@ -21,18 +21,21 @@ package io.netty.buffer;
  */
 public interface ByteBufAllocator {
 
+    //默认分配器
     ByteBufAllocator DEFAULT = ByteBufUtil.DEFAULT_ALLOCATOR;
 
     /**
      * Allocate a {@link ByteBuf}. If it is a direct or heap buffer
      * depends on the actual implementation.
      */
+    //创建一个ByteBuf对象，ByteBuf取决于具体实现
     ByteBuf buffer();
 
     /**
      * Allocate a {@link ByteBuf} with the given initial capacity.
      * If it is a direct or heap buffer depends on the actual implementation.
      */
+    //指定初始化大小
     ByteBuf buffer(int initialCapacity);
 
     /**
@@ -40,11 +43,13 @@ public interface ByteBufAllocator {
      * maximal capacity. If it is a direct or heap buffer depends on the actual
      * implementation.
      */
+    //指定初始化大小和最大容量
     ByteBuf buffer(int initialCapacity, int maxCapacity);
 
     /**
      * Allocate a {@link ByteBuf}, preferably a direct buffer which is suitable for I/O.
      */
+    //分配一个ByteBuf，倾向于Direct buffer
     ByteBuf ioBuffer();
 
     /**
@@ -60,6 +65,7 @@ public interface ByteBufAllocator {
     /**
      * Allocate a heap {@link ByteBuf}.
      */
+    //分配一个HeapByteBuf
     ByteBuf heapBuffer();
 
     /**
