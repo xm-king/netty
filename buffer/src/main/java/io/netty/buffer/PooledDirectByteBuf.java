@@ -32,12 +32,15 @@ final class PooledDirectByteBuf extends PooledByteBuf<ByteBuffer> {
     private static final Recycler<PooledDirectByteBuf> RECYCLER = new Recycler<PooledDirectByteBuf>() {
         @Override
         protected PooledDirectByteBuf newObject(Handle<PooledDirectByteBuf> handle) {
+            //创建PooledDirectByteBuf对象
             return new PooledDirectByteBuf(handle, 0);
         }
     };
 
     static PooledDirectByteBuf newInstance(int maxCapacity) {
+        //从对象池中取出
         PooledDirectByteBuf buf = RECYCLER.get();
+        //重置属性
         buf.reuse(maxCapacity);
         return buf;
     }

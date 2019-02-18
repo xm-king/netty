@@ -551,6 +551,7 @@ public class UnpooledHeapByteBuf extends AbstractReferenceCountedByteBuf {
 
     @Override
     protected void deallocate() {
+        //释放数组
         freeArray(array);
         array = null;
     }
