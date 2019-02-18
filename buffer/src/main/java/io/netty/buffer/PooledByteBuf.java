@@ -24,16 +24,25 @@ import java.nio.ByteOrder;
 
 abstract class PooledByteBuf<T> extends AbstractReferenceCountedByteBuf {
 
+    //循环回收处理器
     private final Recycler.Handle<PooledByteBuf<T>> recyclerHandle;
 
+    //chunk对象
     protected PoolChunk<T> chunk;
+    //引用
     protected long handle;
+    //内存空间
     protected T memory;
+    //偏移量
     protected int offset;
+    //容量
     protected int length;
+    //最大容量
     int maxLength;
+    //本地线程变量缓存
     PoolThreadCache cache;
     private ByteBuffer tmpNioBuf;
+    //ByteBuf分配器
     private ByteBufAllocator allocator;
 
     @SuppressWarnings("unchecked")
@@ -68,6 +77,7 @@ abstract class PooledByteBuf<T> extends AbstractReferenceCountedByteBuf {
     /**
      * Method must be called before reuse this {@link PooledByteBufAllocator}
      */
+    //回收重用
     final void reuse(int maxCapacity) {
         maxCapacity(maxCapacity);
         setRefCnt(1);
@@ -86,6 +96,7 @@ abstract class PooledByteBuf<T> extends AbstractReferenceCountedByteBuf {
 
         // If the request capacity does not require reallocation, just update the length of the memory.
         if (chunk.unpooled) {
+            //容量不变，不需要扩容
             if (newCapacity == length) {
                 return this;
             }
@@ -95,9 +106,11 @@ abstract class PooledByteBuf<T> extends AbstractReferenceCountedByteBuf {
                     length = newCapacity;
                     return this;
                 }
+                //新容量大于当前容量并且小于最大容量
             } else if (newCapacity < length) {
                 if (newCapacity > maxLength >>> 1) {
                     if (maxLength <= 512) {
+                        //缩容
                         if (newCapacity > maxLength - 16) {
                             length = newCapacity;
                             setIndex(Math.min(readerIndex(), newCapacity), Math.min(writerIndex(), newCapacity));
@@ -115,6 +128,7 @@ abstract class PooledByteBuf<T> extends AbstractReferenceCountedByteBuf {
         }
 
         // Reallocation required.
+        //重新分配内存空间
         chunk.arena.reallocate(this, newCapacity, true);
         return this;
     }
@@ -162,6 +176,7 @@ abstract class PooledByteBuf<T> extends AbstractReferenceCountedByteBuf {
 
     @Override
     protected final void deallocate() {
+        //回收对象
         if (handle >= 0) {
             final long handle = this.handle;
             this.handle = -1;

@@ -260,6 +260,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
      * than the current capacity, the buffer is appended with unspecified data whose length is
      * {@code (newCapacity - currentCapacity)}.
      */
+    //重新设置capacity,扩容
     public abstract ByteBuf capacity(int newCapacity);
 
     /**
@@ -268,11 +269,13 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
      * {@link #ensureWritable(int)}, those methods will raise an
      * {@link IllegalArgumentException}.
      */
+    //返回最大Capacity
     public abstract int maxCapacity();
 
     /**
      * Returns the {@link ByteBufAllocator} which created this buffer.
      */
+    //ByteBuf分配器
     public abstract ByteBufAllocator alloc();
 
     /**

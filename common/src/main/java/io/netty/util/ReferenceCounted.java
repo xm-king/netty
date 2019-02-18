@@ -33,11 +33,13 @@ public interface ReferenceCounted {
     /**
      * Returns the reference count of this object.  If {@code 0}, it means this object has been deallocated.
      */
+    //引用数
     int refCnt();
 
     /**
      * Increases the reference count by {@code 1}.
      */
+    //引用数加1
     ReferenceCounted retain();
 
     /**
@@ -65,6 +67,7 @@ public interface ReferenceCounted {
      *
      * @return {@code true} if and only if the reference count became {@code 0} and this object has been deallocated
      */
+    //释放引用数
     boolean release();
 
     /**

@@ -56,10 +56,15 @@ public abstract class AbstractByteBuf extends ByteBuf {
     static final ResourceLeakDetector<ByteBuf> leakDetector =
             ResourceLeakDetectorFactory.instance().newResourceLeakDetector(ByteBuf.class);
 
+    //读取位置
     int readerIndex;
+    //写入位置
     int writerIndex;
+    //标注的读取位置
     private int markedReaderIndex;
+    //标注的写入位置
     private int markedWriterIndex;
+    //最大容量
     private int maxCapacity;
 
     protected AbstractByteBuf(int maxCapacity) {
@@ -279,9 +284,11 @@ public abstract class AbstractByteBuf extends ByteBuf {
         }
 
         // Normalize the current capacity to the power of 2.
+        //计算新的Capacity
         int newCapacity = alloc().calculateNewCapacity(writerIndex + minWritableBytes, maxCapacity);
 
         // Adjust to the new capacity.
+        //扩容
         capacity(newCapacity);
     }
 
