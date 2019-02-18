@@ -19,10 +19,12 @@ public interface ByteBufAllocatorMetric {
     /**
      * Returns the number of bytes of heap memory used by a {@link ByteBufAllocator} or {@code -1} if unknown.
      */
+    //返回已经使用的HeapMemory字节大小数量
     long usedHeapMemory();
 
     /**
      * Returns the number of bytes of direct memory used by a {@link ByteBufAllocator} or {@code -1} if unknown.
      */
+    //返回已经使用的DirectMemory字节大小数量
     long usedDirectMemory();
 }
