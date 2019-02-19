@@ -47,7 +47,7 @@ public class EchoClientHandler extends ChannelInboundHandlerAdapter {
         System.out.println(msg);
         //ctx.write(msg);
         //关闭连接通道
-        ctx.channel().close();
+        //ctx.channel().close();
     }
 
     @Override

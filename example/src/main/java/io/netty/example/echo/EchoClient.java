@@ -24,6 +24,7 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.FixedLengthFrameDecoder;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 import io.netty.handler.ssl.SslContext;
@@ -69,6 +70,7 @@ public final class EchoClient {
                      }
                      //p.addLast(new LoggingHandler(LogLevel.INFO));
                      p.addLast(new StringEncoder());
+                     p.addLast(new FixedLengthFrameDecoder(7));
                      p.addLast(new StringDecoder());
                      p.addLast(new EchoClientHandler());
 

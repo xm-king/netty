@@ -19,6 +19,8 @@ import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
+import java.util.stream.LongStream;
+
 /**
  * Handler implementation for the echo server.
  */
@@ -28,7 +30,9 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         System.out.println(Thread.currentThread().getName() + "-" + msg);
-        ctx.write("Welcome");
+        LongStream.range(1,10).parallel().forEach(l -> {
+            ctx.write("Welcome");
+        });
     }
 
     @Override
