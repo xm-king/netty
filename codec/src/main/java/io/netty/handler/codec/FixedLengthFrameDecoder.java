@@ -38,6 +38,7 @@ import java.util.List;
  */
 public class FixedLengthFrameDecoder extends ByteToMessageDecoder {
 
+    //固定长度
     private final int frameLength;
 
     /**

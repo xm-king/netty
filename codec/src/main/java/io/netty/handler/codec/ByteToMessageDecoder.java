@@ -72,6 +72,7 @@ public abstract class ByteToMessageDecoder extends ChannelInboundHandlerAdapter 
     /**
      * Cumulate {@link ByteBuf}s by merge them into one {@link ByteBuf}'s, using memory copies.
      */
+    //合并
     public static final Cumulator MERGE_CUMULATOR = new Cumulator() {
         @Override
         public ByteBuf cumulate(ByteBufAllocator alloc, ByteBuf cumulation, ByteBuf in) {
@@ -85,10 +86,12 @@ public abstract class ByteToMessageDecoder extends ChannelInboundHandlerAdapter 
                 // See:
                 // - https://github.com/netty/netty/issues/2327
                 // - https://github.com/netty/netty/issues/1764
+                //扩容生成一个新的ByteBuf
                 buffer = expandCumulation(alloc, cumulation, in.readableBytes());
             } else {
                 buffer = cumulation;
             }
+            //向累加器中写入新的数据，老的ByteBuf释放
             buffer.writeBytes(in);
             in.release();
             return buffer;
@@ -100,6 +103,7 @@ public abstract class ByteToMessageDecoder extends ChannelInboundHandlerAdapter 
      * Be aware that {@link CompositeByteBuf} use a more complex indexing implementation so depending on your use-case
      * and the decoder implementation this may be slower then just use the {@link #MERGE_CUMULATOR}.
      */
+    //组合
     public static final Cumulator COMPOSITE_CUMULATOR = new Cumulator() {
         @Override
         public ByteBuf cumulate(ByteBufAllocator alloc, ByteBuf cumulation, ByteBuf in) {
@@ -133,10 +137,15 @@ public abstract class ByteToMessageDecoder extends ChannelInboundHandlerAdapter 
     private static final byte STATE_CALLING_CHILD_DECODE = 1;
     private static final byte STATE_HANDLER_REMOVED_PENDING = 2;
 
+    //已经累积的ByteBuf
     ByteBuf cumulation;
+    //默认累加器为 MERGE_CUMULATOR
     private Cumulator cumulator = MERGE_CUMULATOR;
+    //是否一次只解码一条消息
     private boolean singleDecode;
+    //是否解码到消息
     private boolean decodeWasNull;
+    //是否首次解码
     private boolean first;
     /**
      * A bitmask where the bits are defined as
@@ -252,6 +261,7 @@ public abstract class ByteToMessageDecoder extends ChannelInboundHandlerAdapter 
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        //有新的可读数据到达，进行解码
         if (msg instanceof ByteBuf) {
             CodecOutputList out = CodecOutputList.newInstance();
             try {
@@ -262,6 +272,7 @@ public abstract class ByteToMessageDecoder extends ChannelInboundHandlerAdapter 
                 } else {
                     cumulation = cumulator.cumulate(ctx.alloc(), cumulation, data);
                 }
+                //调用解码
                 callDecode(ctx, cumulation, out);
             } catch (DecoderException e) {
                 throw e;
@@ -276,11 +287,13 @@ public abstract class ByteToMessageDecoder extends ChannelInboundHandlerAdapter 
                     // We did enough reads already try to discard some bytes so we not risk to see a OOME.
                     // See https://github.com/netty/netty/issues/4275
                     numReads = 0;
+                    //释放已读数据
                     discardSomeReadBytes();
                 }
 
                 int size = out.size();
                 decodeWasNull = !out.insertSinceRecycled();
+                //编码完成，触发ChannelRead事件
                 fireChannelRead(ctx, out, size);
                 out.recycle();
             }
@@ -486,6 +499,7 @@ public abstract class ByteToMessageDecoder extends ChannelInboundHandlerAdapter 
             throws Exception {
         decodeState = STATE_CALLING_CHILD_DECODE;
         try {
+            //调用具体的解码
             decode(ctx, in, out);
         } finally {
             boolean removePending = decodeState == STATE_HANDLER_REMOVED_PENDING;
@@ -527,6 +541,13 @@ public abstract class ByteToMessageDecoder extends ChannelInboundHandlerAdapter 
          * Cumulate the given {@link ByteBuf}s and return the {@link ByteBuf} that holds the cumulated bytes.
          * The implementation is responsible to correctly handle the life-cycle of the given {@link ByteBuf}s and so
          * call {@link ByteBuf#release()} if a {@link ByteBuf} is fully consumed.
+         */
+        /**
+         *
+         * @param alloc ByteBuf分配器
+         * @param cumulation 当前累加数据
+         * @param in 数据输入
+         * @return 新的累加数据
          */
         ByteBuf cumulate(ByteBufAllocator alloc, ByteBuf cumulation, ByteBuf in);
     }

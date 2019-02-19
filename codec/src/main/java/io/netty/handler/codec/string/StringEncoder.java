@@ -49,6 +49,7 @@ import java.util.List;
  * </pre>
  */
 @Sharable
+//将String转为ByteBuf
 public class StringEncoder extends MessageToMessageEncoder<CharSequence> {
 
     // TODO Use CharsetEncoder instead.
