@@ -52,11 +52,17 @@ abstract class PoolArena<T> implements PoolArenaMetric {
     private final PoolSubpage<T>[] tinySubpagePools;
     private final PoolSubpage<T>[] smallSubpagePools;
 
+    //利用率50-100%
     private final PoolChunkList<T> q050;
+    //利用率25-75%
     private final PoolChunkList<T> q025;
+    //1-50%
     private final PoolChunkList<T> q000;
+    //利用率0-25%
     private final PoolChunkList<T> qInit;
+    //利用率75-100%
     private final PoolChunkList<T> q075;
+    //利用率100%
     private final PoolChunkList<T> q100;
 
     private final List<PoolChunkListMetric> chunkListMetrics;

@@ -104,16 +104,21 @@ final class PoolChunk<T> implements PoolChunkMetric {
 
     private static final int INTEGER_SIZE_MINUS_ONE = Integer.SIZE - 1;
 
+    //所属的PoolArena
     final PoolArena<T> arena;
+    //内存空间
     final T memory;
     final boolean unpooled;
     final int offset;
-
+    //信息分配二叉树
     private final byte[] memoryMap;
+    //高度二叉树
     private final byte[] depthMap;
+    //PoolSubpage数组
     private final PoolSubpage<T>[] subpages;
     /** Used to determine if the requested capacity is equal to or greater than pageSize. */
     private final int subpageOverflowMask;
+    //page大小，默认8KB
     private final int pageSize;
     private final int pageShifts;
     private final int maxOrder;
@@ -125,8 +130,11 @@ final class PoolChunk<T> implements PoolChunkMetric {
 
     private int freeBytes;
 
+    //所属PoolChunkList
     PoolChunkList<T> parent;
+    //前置节点
     PoolChunk<T> prev;
+    //后继节点
     PoolChunk<T> next;
 
     // TODO: Test if adding padding helps under contention
@@ -162,7 +170,6 @@ final class PoolChunk<T> implements PoolChunkMetric {
                 memoryMapIndex ++;
             }
         }
-
         subpages = newSubpageArray(maxSubpageAllocs);
     }
 
